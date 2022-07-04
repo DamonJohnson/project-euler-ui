@@ -1,23 +1,8 @@
 import { Link } from "react-router-dom"
 import React, { useState } from "react"
 
-function ProblemList() {
-  const [problems, setProblems] = useState([
-    {
-      id: 1,
-      description: "Multiples of 3 of 5",
-      question:
-        "If we list all the natural numbers below 10 that are multiples of 3 or 5, we get 3, 5, 6 and 9. the sum of these multiples is 23. Find the sum of all the multiples of 3 or 5 below 1000.",
-      solution: 233168,
-    },
-    {
-      id: 3,
-      description: "Largest prime factor",
-      question:
-        "the prime factors of 13195 are 5, 7, 13 and 29. What is the largest prime factor of the number 600851475143 ?",
-      solution: 6857,
-    },
-  ])
+function ProblemTable({problems}) {
+  
 
   return (
     <>
@@ -46,8 +31,8 @@ function ProblemList() {
                         {problem.id}
                       </td>
                       <td className="px-6 py-4">
-                        <div className="text-sm text-gray-900">
-                          {problem.description}
+                        <div className="text-sm text-blue-500 underline">
+                          <Link to={`/problem/${problem.id}`}>{problem.description}</Link> 
                         </div>
                       </td>
                       <td className="px-6 py-4">
@@ -72,4 +57,4 @@ function ProblemList() {
   )
 }
 
-export default ProblemList
+export default ProblemTable
