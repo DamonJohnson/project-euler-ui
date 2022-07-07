@@ -7,5 +7,8 @@ Web Framework: Express.js
 Document DB: MongoDB + Mongoose
 
 
-3. Requirements
 
+3. Assumptions
+- A separate leaderboard should be produced for each problem
+- No authentication for requests or users
+- 

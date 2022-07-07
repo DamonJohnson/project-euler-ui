@@ -2,15 +2,14 @@ import { useParams, Link } from "react-router-dom";
 import React, { useEffect, useState } from "react"
 
 function ShowProblem({ problems }) {
-  const { id } = useParams()
+  const { eulerId } = useParams()
   const [submission, setSubmission] = useState("")
-  const problem = problems.find(problem => problem.id === parseInt(id))
+  const problem = problems.find(problem => problem.eulerId == (eulerId))
 
   return (
     <>
-      
       <div className="container mx-auto px-4 sm:px-6 xl:px-12">
-        <h2 className="text-2xl pb-4 font-bold text-center">Problem {problem.id}: {problem.description}</h2>
+        <h2 className="text-2xl pb-4 font-bold text-center">Problem {problem.eulerId}: {problem.description}</h2>
         <div className="flex flex-col items-center justify-center space-y-6 text-center">
           <p className="max-w-screen-md text-lg text-gray-600">{problem.question}</p>
           <form className="flex w-full max-w-md flex-col items-center space-y-3 sm:flex-row sm:space-y-0 sm:space-x-2">

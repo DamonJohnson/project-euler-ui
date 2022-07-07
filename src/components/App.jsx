@@ -1,62 +1,61 @@
-import { BrowserRouter, Routes, Route, useParams } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import React, { useEffect, useState } from "react"
 import Title from "./Title";
 import ProblemTable from "./ProblemTable"
 import ShowProblem from "./ShowProblem"
 import Leaderboard from "./Leaderboard"
+import Login from "./Login"
+import Register from "./Register"
+// import StoreContext from "../store";
+// import useStore from "../reducer";
 
 
 function App() {
-  const [problems, setProblems] = useState([
-    {
-      id: 1,
-      description: "Multiples of 3 or 5",
-      question:
-        "If we list all the natural numbers below 10 that are multiples of 3 or 5, we get 3, 5, 6 and 9. the sum of these multiples is 23. Find the sum of all the multiples of 3 or 5 below 1000.",
-      solution: 233168,
-    },
-    {
-      id: 3,
-      description: "Largest prime factor",
-      question:
-        "the prime factors of 13195 are 5, 7, 13 and 29. What is the largest prime factor of the number 600851475143 ?",
-      solution: 6857,
-    },
-  ])
 
-  const [users, setUsers] = useState([
-    {
-      id: 1,
-      userName: 'Adam',
-      password: '12345'
-    },
-    {
-      id: 2,
-      userName: 'Ben',
-      password: '12345'
-    },
-    {
-      id: 3,
-      userName: 'Chris',
-      password: '12345'
-    },
-    {
-      id: 1,
-      userName: 'Dave',
-      password: '12345'
+  const [problems, setProblems] = useState([])
+  const [users, setUsers] = useState([ ])
+
+
+
+  useEffect(() => {
+    async function getProblems() {
+      const res = await fetch('http://localhost:3201/api/v1/problems')
+      setProblems(await res.json()) //updates the state and triggers rerender of the component
     }
-  ])
-  
+    getProblems()
+  }, [])
+
+
+  async function addUser(username, password) {
+    const newUser = { username, password}
+    const res = await fetch('http://localhost:3201/api/v1/users', {
+      method: 'post',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(newUser)
+    })
+  const returnedUser = await res.json()
+  setUsers([...users, returnedUser])
+  return returnedUser._id
+}
+
+
+
+
   return (
     <BrowserRouter>
       <Title />
       <Routes>
+        <Route exact path="/register" element={<Register />} />
+        <Route exact path="/login" element={<Login />} />
         <Route path="/" element={<ProblemTable problems={problems} />} />
-        <Route path="problem/:id" element={<ShowProblem problems={problems} />}  />
-        <Route path="problem/:id/leaderboard" element={<Leaderboard problems={problems} users={users} />} />
-        <Route path = "*" element = {<h4>Page not found</h4>} />
+        <Route path="problem/:eulerId" element={<ShowProblem problems={problems} />} />
+        <Route path="problem/:eulerId/leaderboard" element={<Leaderboard problems={problems} users={users} />} />
+        <Route path="*" element={<h4>Page not found</h4>} />
       </Routes>
-    </BrowserRouter>
+      </BrowserRouter>
   );
 }
 

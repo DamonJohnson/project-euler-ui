@@ -1,9 +1,7 @@
 import { Link } from "react-router-dom"
-import React, { useState } from "react"
 
 function ProblemTable({problems}) {
   
-
   return (
     <>
       <div className="container flex justify-center mx-auto">
@@ -28,11 +26,11 @@ function ProblemTable({problems}) {
                   {problems.map((problem, index) => (
                     <tr className="whitespace-nowrap" key={index}>
                       <td className="px-6 py-4 text-sm text-gray-500">
-                        {problem.id}
+                        {problem.eulerId}
                       </td>
                       <td className="px-6 py-4">
                         <div className="text-sm text-blue-500 underline">
-                          <Link to={`/problem/${problem.id}`}>{problem.description}</Link> 
+                          <Link to={`/problem/${problem.eulerId}`}>{problem.description}</Link> 
                         </div>
                       </td>
                       <td className="px-6 py-4">
@@ -40,7 +38,7 @@ function ProblemTable({problems}) {
                           href="#"
                           className="px-4 py-1 text-sm text-white bg-blue-400 rounded"
                         >
-                          <Link to={`/problem/${problem.id}/leaderboard`}>
+                          <Link to={`/problem/${problem.eulerId}/leaderboard`}>
                             View
                           </Link>
                         </button>
